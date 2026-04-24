@@ -12,13 +12,29 @@ namespace C7
         public Form1()
         {
             InitializeComponent();
-
+            pictureBox1.Image = Properties.Resources.MICT_Logo_White;
             timeOut.Format = DateTimePickerFormat.Time;
             timeOut.ShowUpDown = true;
+            TopMost = true;
+            EnableKioskMode();
+            shadowLayout();
+        }
+        public void shadowLayout()
+        {
+            var overlay = new Form
+            {
+                FormBorderStyle = FormBorderStyle.None,
+                WindowState = FormWindowState.Maximized,
+                BackColor = Color.Black,
+                Opacity = 0.50,
+            };
+            overlay.Show();
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
+            
+
             if (checker() == false)
             {
                 return;
@@ -119,6 +135,19 @@ namespace C7
                 }
             }
             return true;
+        }
+        private void EnableKioskMode()
+        {
+            this.FormBorderStyle = FormBorderStyle.None;
+            this.TopMost = true;
+            this.KeyPreview = true;
+            this.KeyDown += (s, e) =>
+            {
+                if (e.Alt && e.KeyCode == Keys.F4)
+                {
+                    e.Handled = true;
+                }
+            };
         }
     }
 }
