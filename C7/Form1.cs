@@ -19,14 +19,14 @@ namespace C7
 
         private void button1_Click(object sender, EventArgs e)
         {
-            if (checker() == false)
-            {
-                return;
-            }
+            Checker();
 
+        }
+        public void saveData()
+        {
             disableControls();
             disableSubmit();
-            
+
             var payload = new
             {
                 date = DateTime.Today.ToString("yyyy-MM-dd"),
@@ -41,13 +41,6 @@ namespace C7
             };
 
             SendPayload(payload);
-
-            DialogResult dr = MessageBox.Show("Submitted successfully!", "Success", MessageBoxButtons.OK);
-            if (dr == DialogResult.OK)
-            {
-                Close();
-            }
-
         }
 
         public async void SendPayload(object data) {
@@ -65,6 +58,12 @@ namespace C7
                     var content = new System.Net.Http.StringContent(json, System.Text.Encoding.UTF8, "application/json");
                     var response = await client.PostAsync(URL, content);
                     string result = await response.Content.ReadAsStringAsync();
+                }
+
+                DialogResult dr = MessageBox.Show("Submitted successfully!", "Success", MessageBoxButtons.OK);
+                if (dr == DialogResult.OK)
+                {
+                    Close();
                 }
             }
             catch (Exception ex)
@@ -89,24 +88,29 @@ namespace C7
             submit.BackColor = Color.Green;
         }
 
-        public bool checker()
+        public void Checker()
         {
-
-            foreach (Control ctrl in this.Controls)
+            foreach (Control ctrl in tableLayoutPanel1.Controls)
             {
-                if (ctrl is TextBox tb)
+                if (ctrl is TextBox txt && !string.IsNullOrWhiteSpace(txt.Tag?.ToString()))
                 {
-                    if (string.IsNullOrWhiteSpace(tb.Text))
+                    if (string.IsNullOrWhiteSpace(txt.Text))
                     {
-                        MessageBox.Show("This field cannot be empty.",
-                               "Validation Error",
-                               MessageBoxButtons.OK,
-                               MessageBoxIcon.Warning);
-                        return false;
+                        MessageBox.Show(txt.Tag.ToString(), "Validation Error",
+                            MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return;
                     }
                 }
             }
-            return true;
+
+            saveData();
+        }
+
+       
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }

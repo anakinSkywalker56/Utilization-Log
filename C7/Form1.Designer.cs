@@ -41,12 +41,12 @@
             this.txtSched = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.timeOut = new System.Windows.Forms.DateTimePicker();
+            this.txtInstruc = new System.Windows.Forms.TextBox();
             this.txtPcNum = new System.Windows.Forms.TextBox();
             this.label9 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
-            this.txtInstruc = new System.Windows.Forms.TextBox();
             this.label8 = new System.Windows.Forms.Label();
-            this.timeOut = new System.Windows.Forms.DateTimePicker();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.panel1.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
@@ -81,6 +81,7 @@
             this.txtName.Name = "txtName";
             this.txtName.Size = new System.Drawing.Size(286, 29);
             this.txtName.TabIndex = 1;
+            this.txtName.Tag = "Required";
             // 
             // label2
             // 
@@ -118,6 +119,7 @@
             this.txtCourse.Name = "txtCourse";
             this.txtCourse.Size = new System.Drawing.Size(286, 29);
             this.txtCourse.TabIndex = 3;
+            this.txtCourse.Tag = "Required";
             this.toolTip1.SetToolTip(this.txtCourse, "BSMT-1");
             // 
             // submit
@@ -144,6 +146,7 @@
             this.txtSubject.Name = "txtSubject";
             this.txtSubject.Size = new System.Drawing.Size(286, 29);
             this.txtSubject.TabIndex = 5;
+            this.txtSubject.Tag = "Required";
             this.toolTip1.SetToolTip(this.txtSubject, "ICT, BA 319");
             // 
             // label4
@@ -168,6 +171,7 @@
             this.txtSched.Name = "txtSched";
             this.txtSched.Size = new System.Drawing.Size(286, 29);
             this.txtSched.TabIndex = 10;
+            this.txtSched.Tag = "Required";
             // 
             // label5
             // 
@@ -219,6 +223,24 @@
             this.tableLayoutPanel1.Size = new System.Drawing.Size(564, 284);
             this.tableLayoutPanel1.TabIndex = 12;
             // 
+            // timeOut
+            // 
+            this.timeOut.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.timeOut.Location = new System.Drawing.Point(229, 252);
+            this.timeOut.Name = "timeOut";
+            this.timeOut.Size = new System.Drawing.Size(283, 20);
+            this.timeOut.TabIndex = 17;
+            // 
+            // txtInstruc
+            // 
+            this.txtInstruc.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.txtInstruc.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtInstruc.Location = new System.Drawing.Point(227, 205);
+            this.txtInstruc.Name = "txtInstruc";
+            this.txtInstruc.Size = new System.Drawing.Size(286, 29);
+            this.txtInstruc.TabIndex = 13;
+            this.txtInstruc.Tag = "Required";
+            // 
             // txtPcNum
             // 
             this.txtPcNum.Anchor = System.Windows.Forms.AnchorStyles.None;
@@ -227,6 +249,7 @@
             this.txtPcNum.Name = "txtPcNum";
             this.txtPcNum.Size = new System.Drawing.Size(286, 29);
             this.txtPcNum.TabIndex = 19;
+            this.txtPcNum.Tag = "Required";
             this.toolTip1.SetToolTip(this.txtPcNum, "ex. PC-1\r\n");
             // 
             // label9
@@ -257,15 +280,6 @@
             this.label6.Text = "Instructor";
             this.label6.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
-            // txtInstruc
-            // 
-            this.txtInstruc.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.txtInstruc.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtInstruc.Location = new System.Drawing.Point(227, 205);
-            this.txtInstruc.Name = "txtInstruc";
-            this.txtInstruc.Size = new System.Drawing.Size(286, 29);
-            this.txtInstruc.TabIndex = 13;
-            // 
             // label8
             // 
             this.label8.Anchor = System.Windows.Forms.AnchorStyles.Right;
@@ -279,14 +293,6 @@
             this.label8.TabIndex = 16;
             this.label8.Text = "Time out";
             this.label8.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // timeOut
-            // 
-            this.timeOut.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.timeOut.Location = new System.Drawing.Point(229, 252);
-            this.timeOut.Name = "timeOut";
-            this.timeOut.Size = new System.Drawing.Size(283, 20);
-            this.timeOut.TabIndex = 17;
             // 
             // toolTip1
             // 
@@ -310,6 +316,7 @@
             this.Name = "Form1";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Form1";
+            this.Load += new System.EventHandler(this.Form1_Load);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             this.tableLayoutPanel1.ResumeLayout(false);
