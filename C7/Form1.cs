@@ -89,21 +89,33 @@ namespace C7
             submit.BackColor = Color.Green;
         }
 
+
         public bool checker()
         {
 
-            foreach (Control ctrl in this.Controls)
+            return ValidateControls(this);
+        }
+
+        private bool ValidateControls(Control parent)
+        {
+            foreach (Control ctrl in parent.Controls)
             {
                 if (ctrl is TextBox tb)
                 {
-                    if (string.IsNullOrWhiteSpace(tb.Text))
+                    if (string.IsNullOrEmpty(tb.Text))
                     {
-                        MessageBox.Show("This field cannot be empty.",
-                               "Validation Error",
-                               MessageBoxButtons.OK,
-                               MessageBoxIcon.Warning);
+                        MessageBox.Show("This field cannot be empty,",
+                                    "Valdiation Error",
+                                    MessageBoxButtons.OK,
+                                    MessageBoxIcon.Warning);
+                        tb.Focus();
                         return false;
                     }
+                }
+                if (ctrl.HasChildren)
+                {
+                    if (!ValidateControls(ctrl))
+                        return false;
                 }
             }
             return true;
