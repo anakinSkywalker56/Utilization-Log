@@ -23,7 +23,7 @@ namespace C7
             string appName = "C7";
             string exePath = Application.ExecutablePath;
 
-            RegistryKey key = Registry.LocalMachine.OpenSubKey(
+            RegistryKey key = Registry.CurrentUser.OpenSubKey(
                 @"SOFTWARE\Microsoft\Windows\CurrentVersion\Run", true);
 
             object currentValue = key.GetValue(appName);
