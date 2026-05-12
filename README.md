@@ -3,8 +3,8 @@ This is the C5/C6 Utilization Log system for paperless monitoring
 
 ## Developers
 
-- Admin: [John Anakin Injug](#https://github.com/anakinSkywalker56) 
-- Collaborator: [Kyle Albeos](#https://github.com/gKylee)
+- Admin: [John Anakin Injug](https://github.com/anakinSkywalker56) 
+- Collaborator: [Kyle Albeos](https://github.com/gKylee)
 
 
 ## Description
