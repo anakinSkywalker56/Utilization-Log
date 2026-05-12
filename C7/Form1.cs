@@ -7,7 +7,7 @@ namespace C7
 {
     public partial class Form1 : Form
     {
-        private const string URL = "https://script.google.com/macros/s/AKfycbwIcZEGKQFD1lYNF9hBjUKbzk94SdvcqpwXQGzfkpFWm5LlwW-y_upssrCB8UAx_foa/exec";
+        private const string URL = "GOOGLE_SHEET_URL";
 
         public Form1()
         {
