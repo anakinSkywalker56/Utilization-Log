@@ -1,24 +1,27 @@
 ﻿using System;
 using System.Drawing;
 using System.Windows.Forms;
-using Microsoft.Win32;
 
 namespace C7
 {
     public partial class Form1 : Form
     {
-        private const string URL = "GOOGLE_SHEET_URL";
+        private const string URL = "https://script.google.com/macros/s/AKfycbxlOPw0Emu0EeyDyUlSaEkyoC-Kmu5l4ZzcUhQif7g5p2-3CxHbnqngB8BUbz7mtgGG/exec";
 
         public Form1()
         {
             InitializeComponent();
             pictureBox1.Image = Properties.Resources.MICT_Logo_White;
-            timeOut.Format = DateTimePickerFormat.Time;
+
+            timeOut.Format = DateTimePickerFormat.Custom;
+            timeOut.CustomFormat = "hh:mm tt";
             timeOut.ShowUpDown = true;
+
             TopMost = true;
             EnableKioskMode();
             shadowLayout();
         }
+
         public void shadowLayout()
         {
             var overlay = new Form
@@ -33,8 +36,6 @@ namespace C7
 
         private void button1_Click(object sender, EventArgs e)
         {
-            
-
             if (checker() == false)
             {
                 return;
@@ -42,9 +43,10 @@ namespace C7
 
             disableControls();
             disableSubmit();
-            
+
             var payload = new
             {
+                sheetName = "N301",
                 date = DateTime.Today.ToString("yyyy-MM-dd"),
                 pcNum = txtPcNum.Text.Trim(),
                 name = txtName.Text.Trim(),
@@ -52,44 +54,57 @@ namespace C7
                 subject = txtSubject.Text.Trim(),
                 sched = txtSched.Text.Trim(),
                 instructor = txtInstruc.Text.Trim(),
-                timeInData = DateTime.Now.TimeOfDay.ToString(),
-                timeOutData = timeOut.Value.TimeOfDay.ToString(),
+
+               
+                timeInData = DateTime.Now.ToString("hh:mm tt"),    
+                timeOutData = timeOut.Value.ToString("hh:mm tt"), 
             };
 
             SendPayload(payload);
-
-            DialogResult dr = MessageBox.Show("Submitted successfully!", "Success", MessageBoxButtons.OK);
-            if (dr == DialogResult.OK)
-            {
-                Close();
-            }
-
+            LoadingForm load = new LoadingForm();
+            load.Show();
+            this.Hide();
         }
 
-        public async void SendPayload(object data) {
-            try
+        public void SendPayload(object data)
+        {
+            System.Web.Script.Serialization.JavaScriptSerializer serializer = new System.Web.Script.Serialization.JavaScriptSerializer();
+            string json = serializer.Serialize(data);
+
+            System.Threading.ThreadPool.QueueUserWorkItem(state =>
             {
-
-                var handler = new System.Net.Http.HttpClientHandler()
+                try
                 {
-                    AllowAutoRedirect = true
-                };
+                    using (var client = new System.Net.WebClient())
+                    {
+                        client.Headers[System.Net.HttpRequestHeader.ContentType] = "application/json";
+                        client.UploadString(URL, "POST", json);
+                    }
 
-                using (var client = new System.Net.Http.HttpClient(handler))
-                {
-                    string json = Newtonsoft.Json.JsonConvert.SerializeObject(data);
-                    var content = new System.Net.Http.StringContent(json, System.Text.Encoding.UTF8, "application/json");
-                    var response = await client.PostAsync(URL, content);
-                    string result = await response.Content.ReadAsStringAsync();
+                    this.Invoke((MethodInvoker)delegate
+                    {
+                        DialogResult dr = MessageBox.Show("Submitted successfully!", "Success", MessageBoxButtons.OK);
+                        if (dr == DialogResult.OK)
+                        {
+                            Close();
+                        }
+                    });
                 }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Error: " + ex.Message);
-            }
+                catch (Exception ex)
+                {
+                    this.Invoke((MethodInvoker)delegate
+                    {
+                        MessageBox.Show("Error: " + ex.Message);
+                        submit.Enabled = true;
+                        submit.BackColor = SystemColors.Control;
+                        submit.ForeColor = SystemColors.ControlText;
+                    });
+                }
+            });
         }
 
-        public void disableControls() { 
+        public void disableControls()
+        {
             txtName.Enabled = false;
             txtCourse.Enabled = false;
             txtInstruc.Enabled = false;
@@ -99,16 +114,15 @@ namespace C7
             txtPcNum.Enabled = false;
         }
 
-        public void disableSubmit() {
+        public void disableSubmit()
+        {
             submit.Enabled = false;
             submit.ForeColor = SystemColors.Control;
             submit.BackColor = Color.Green;
         }
 
-
         public bool checker()
         {
-
             return ValidateControls(this);
         }
 
@@ -116,18 +130,20 @@ namespace C7
         {
             foreach (Control ctrl in parent.Controls)
             {
-                if (ctrl is TextBox tb)
+                TextBox tb = ctrl as TextBox;
+                if (tb != null)
                 {
                     if (string.IsNullOrEmpty(tb.Text))
                     {
-                        MessageBox.Show("This field cannot be empty,",
-                                    "Valdiation Error",
-                                    MessageBoxButtons.OK,
-                                    MessageBoxIcon.Warning);
+                        MessageBox.Show("This field cannot be empty.",
+                                        "Validation Error",
+                                        MessageBoxButtons.OK,
+                                        MessageBoxIcon.Warning);
                         tb.Focus();
                         return false;
                     }
                 }
+
                 if (ctrl.HasChildren)
                 {
                     if (!ValidateControls(ctrl))
@@ -136,6 +152,7 @@ namespace C7
             }
             return true;
         }
+
         private void EnableKioskMode()
         {
             this.FormBorderStyle = FormBorderStyle.None;
@@ -148,6 +165,11 @@ namespace C7
                     e.Handled = true;
                 }
             };
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }
