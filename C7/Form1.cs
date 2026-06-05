@@ -6,7 +6,7 @@ namespace C7
 {
     public partial class Form1 : Form
     {
-        private const string URL = "https://script.google.com/macros/s/AKfycbxlOPw0Emu0EeyDyUlSaEkyoC-Kmu5l4ZzcUhQif7g5p2-3CxHbnqngB8BUbz7mtgGG/exec";
+        private const string URL = "https://script.google.com/macros/s/AKfycbxE2Xk9eP3WiT1cp1VILe3om9DvOa0iuGt9eqYIk0qaBu_tV6zB4Ax3TUJuOHVZY4VglA/exec";
 
         public Form1()
         {
@@ -46,7 +46,7 @@ namespace C7
 
             var payload = new
             {
-                sheetName = "N301",
+                sheetName = "C5",
                 date = DateTime.Today.ToString("yyyy-MM-dd"),
                 pcNum = txtPcNum.Text.Trim(),
                 name = txtName.Text.Trim(),
@@ -61,9 +61,11 @@ namespace C7
             };
 
             SendPayload(payload);
-            LoadingForm load = new LoadingForm();
-            load.Show();
-            this.Hide();
+            DialogResult dr = MessageBox.Show("Submitted successfully!", "Success", MessageBoxButtons.OK);
+            if (dr == DialogResult.OK)
+            {
+                Close();
+            }
         }
 
         public void SendPayload(object data)
