@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "C7", "C7.csproj", "{89E3750
 EndProject
 Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "C5Comp", "..\C5Comp\C5Comp.vdproj", "{12DC0C26-0872-220B-16D0-3B944614F985}"
 EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "C5_Installer", "..\..\Utilization Log Installer\Not Zipped\C5v1.0.2\C5_Installer\C5_Installer.vdproj", "{03AA91D2-33C8-CF2F-76BC-C0E2D18ED4E9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -28,6 +30,10 @@ Global
 		{12DC0C26-0872-220B-16D0-3B944614F985}.Debug|x64.ActiveCfg = Debug
 		{12DC0C26-0872-220B-16D0-3B944614F985}.Release|Any CPU.ActiveCfg = Release
 		{12DC0C26-0872-220B-16D0-3B944614F985}.Release|x64.ActiveCfg = Release
+		{03AA91D2-33C8-CF2F-76BC-C0E2D18ED4E9}.Debug|Any CPU.ActiveCfg = Debug
+		{03AA91D2-33C8-CF2F-76BC-C0E2D18ED4E9}.Debug|x64.ActiveCfg = Debug
+		{03AA91D2-33C8-CF2F-76BC-C0E2D18ED4E9}.Release|Any CPU.ActiveCfg = Release
+		{03AA91D2-33C8-CF2F-76BC-C0E2D18ED4E9}.Release|x64.ActiveCfg = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
